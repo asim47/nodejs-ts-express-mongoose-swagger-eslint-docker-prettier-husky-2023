@@ -69,7 +69,6 @@ class App {
         dbStates: DB_STATES,
         dbState: mongoose.connection.readyState,
         connectionSuccess: mongoose.connection.readyState === 1,
-        env: process.env,
       });
     });
     this.app.use('*', (req: express.Request, res: express.Response): express.Response => {

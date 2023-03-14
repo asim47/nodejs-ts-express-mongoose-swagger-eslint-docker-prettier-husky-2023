@@ -1,0 +1,252 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "SWAGGER EXAMPLE BY ASIM",
+    "description": "User facing API endpoint service for MetaMansion experience.",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/status": {
+      "get": {
+        "tags": ["Status"],
+        "summary": "Returns the status of the server's connection with database",
+        "responses": {
+          "200": {
+            "description": "DB connection success",
+            "schema": {
+              "$ref": "#/components/schemas/status"
+            }
+          },
+          "304": {
+            "description": "DB connection failed",
+            "schema": {
+              "$ref": "#/components/schemas/status"
+            }
+          }
+        }
+      }
+    },
+    "/{address}/nonce": {
+      "get": {
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "description": "Address of the user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": ["Auth"],
+        "summary": "Takes an address and returns the nonce for that address",
+        "responses": {
+          "200": {
+            "description": "Nonce generated successfully!",
+            "schema": {
+              "$ref": "#/components/schemas/nonce"
+            }
+          },
+          "404": {
+            "description": "Address not found"
+          }
+        }
+      }
+    },
+    "/auth": {
+      "post": {
+        "tags": ["Auth"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "auth.request",
+            "schema": {
+              "$ref": "#/components/schemas/auth-request"
+            }
+          }
+        ],
+        "summary": "Takes an address and signature and returns a token",
+        "responses": {
+          "200": {
+            "description": "Token generated successfully!",
+            "schema": {
+              "$ref": "#/components/schemas/auth"
+            }
+          },
+          "400": {
+            "description": "Token generation failed!"
+          }
+        }
+      }
+    },
+    "/metaverse": {
+      "post": {
+        "tags": ["Metaverse"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "metaverse.request",
+            "schema": {
+              "$ref": "#/components/schemas/metaverse-request"
+            }
+          }
+        ],
+        "summary": "Takes a user address and returns an IP for metaverse instance",
+        "responses": {
+          "200": {
+            "description": "IP retrieved successfully!",
+            "schema": {
+              "$ref": "#/components/schemas/metaverse"
+            }
+          },
+          "400": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/nft": {
+      "get": {
+        "tags": ["NFT"],
+        "summary": "Returns the NFTs owned by the user.",
+        "responses": {
+          "200": {
+            "description": "NFTs retrieved successfully!",
+            "schema": {
+              "$ref": "#/components/schemas/nfts"
+            }
+          },
+          "404": {
+            "description": "NFTs not found"
+          }
+        }
+      }
+    },
+    "/marketplace": {
+      "get": {
+        "tags": ["NFT"],
+        "summary": "Returns the NFT marketplace URL",
+        "responses": {
+          "200": {
+            "description": "NFT marketplace URL retrieved successfully!",
+            "schema": {
+              "$ref": "#/components/schemas/nft-marketplace"
+            }
+          },
+          "404": {
+            "description": "NFT marketplace URL not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "status": {
+        "title": "status.response",
+        "type": "object",
+        "properties": {
+          "healthy": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "nonce": {
+        "title": "nonce.response",
+        "type": "object",
+        "properties": {
+          "nonce": {
+            "type": "string"
+          }
+        }
+      },
+      "nfts": {
+        "title": "nft.response",
+        "type": "object",
+        "properties": {
+          "nftData": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "full": {
+                  "type": "string"
+                },
+                "thumbnail": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "auth": {
+        "title": "auth.response",
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "metaverse": {
+        "title": "metaverse.response",
+        "type": "object",
+        "properties": {
+          "ip": {
+            "type": "string"
+          },
+          "ready": {
+            "type": "boolean"
+          }
+        }
+      },
+      "metaverse-request": {
+        "type": "object",
+        "required": ["address"],
+        "properties": {
+          "address": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$"
+          }
+        }
+      },
+      "auth-request": {
+        "type": "object",
+        "required": ["signature", "address"],
+        "properties": {
+          "address": {
+            "type": "string",
+            "pattern": "^0x[a-fA-F0-9]{40}$"
+          },
+          "signature": {
+            "type": "string"
+          }
+        }
+      },
+      "nft-marketplace": {
+        "title": "marketplace.response",
+        "type": "object",
+        "properties": {
+          "marketplaceUrl": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

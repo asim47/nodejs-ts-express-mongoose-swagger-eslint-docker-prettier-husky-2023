@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    ports:
+      - '8000:8000'
+    env_file:
+      - .env.dev
+    environment:
+      - MONGO_URI=${DB_URL}
+    depends_on:
+      - mongo
+    command: >
+      sh -c "npm run build && npm run dev -- --watchDir /app/src --ext ts,json --ignore-watch node_modules"
+    volumes:
+      - .:/app
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_DATABASE=${DB_NAME}
+    ports:
+      - '27017:27017'

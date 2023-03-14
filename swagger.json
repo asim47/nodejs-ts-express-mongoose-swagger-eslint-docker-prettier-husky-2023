@@ -1,0 +1,84 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Swagger Backend",
+    "description": "User facing API endpoint service",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:8000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/status": {
+      "get": {
+        "tags": ["Status"],
+        "summary": "Returns the status of the server's connection with database",
+        "responses": {
+          "200": {
+            "description": "DB connection success",
+            "schema": {
+              "$ref": "#/components/schemas/status"
+            }
+          },
+          "304": {
+            "description": "DB connection failed",
+            "schema": {
+              "$ref": "#/components/schemas/status"
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "status": {
+        "title": "status.response",
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "environment": {
+            "type": "string"
+          },
+          "versionNo": {
+            "type": "string"
+          },
+          "dbStates": {
+            "type": "object",
+            "properties": {
+              "0": {
+                "type": "string"
+              },
+              "1": {
+                "type": "string"
+              },
+              "2": {
+                "type": "string"
+              },
+              "3": {
+                "type": "string"
+              },
+              "99": {
+                "type": "string"
+              }
+            }
+          },
+          "dbState": {
+            "type": "number"
+          },
+          "connectionSuccess": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

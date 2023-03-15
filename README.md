@@ -44,5 +44,5 @@ docker-compose up
 - **Docker support**
 - **Linting**: with [ESLint](https://eslint.org) and [Prettier](https://prettier.io)
 - **Editor config**: consistent editor configuration using [EditorConfig](https://editorconfig.org)
-- **Husky: for lint checking on commit
+- **Husky**: for lint checking on commit
 

@@ -28,7 +28,7 @@ export const HttpBadRequest = (res: Response, msg?: string, error?: any): Respon
     Error: true,
     Msg: msg || 'Bad Request',
     Exception: error,
-    ExceptionString: error.toString(),
+    ExceptionString: error?.toString() || "",
   });
 };
 
@@ -38,7 +38,7 @@ export const HttpServerError = (res: Response, msg?: string, error?: any): Respo
     Error: true,
     Msg: msg || 'Bad Request',
     Exception: error,
-    ExceptionString: error.toString(),
+    ExceptionString: error?.toString() || "",
   });
 };
 
@@ -48,7 +48,7 @@ export const HttpCustomError = (res: Response, statusCode: number, msg: string, 
     Error: true,
     Msg: msg,
     Exception: error,
-    ExceptionString: error.toString(),
+    ExceptionString: error?.toString() || "",
     Data: data,
   });
 };

@@ -16,6 +16,7 @@ import xss from 'xss-clean';
 import { superUserSeed } from './src/seeds/superUser.seed';
 import SwaggerUI from 'swagger-ui-express';
 import SwaggerDocs from './swagger.json';
+import { CommonApi } from './src/routers/common.router';
 class App {
   constructor() {
     this.app = express();
@@ -55,22 +56,9 @@ class App {
   private routes(): void {
     Logger.info('Routes are being initialized...');
 
-    this.app.use(`/api/${versionNo}/users`, UserApi);
+    this.app.use(`/api/${versionNo}/user`, UserApi);
 
-    this.app.get('/status', (req: express.Request, res: express.Response): express.Response => {
-      Logger.info('Checking Server Status...');
-      Logger.info('Server Running.');
-      Logger.info('Checking DB Status...');
-      Logger.info(`Checking DB Connection ${DB_STATES[mongoose.connection.readyState]}.`);
-      return res.status(mongoose.connection.readyState === 1 ? 200 : 500).json({
-        message: 'Server is running',
-        environment: Server.ENVIRONMENT,
-        versionNo: versionNo,
-        dbStates: DB_STATES,
-        dbState: mongoose.connection.readyState,
-        connectionSuccess: mongoose.connection.readyState === 1,
-      });
-    });
+    this.app.use(`/api/${versionNo}/common/`, CommonApi);
     this.app.use('*', (req: express.Request, res: express.Response): express.Response => {
       try {
         throw `the Endpoint ${req.originalUrl} with the method ${req.method} Is not hosted on our server!`;

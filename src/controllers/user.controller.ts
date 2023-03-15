@@ -5,10 +5,10 @@ import * as JWT from 'jsonwebtoken';
 import UserModel from '../models/user.model';
 import { HttpServerError, HttpSuccess } from '../helpers/httpResponse';
 
-// @Route POST /api/users/register/admin
+// @Route POST /user/register
 // @DESC Register a user
 // @ACCESS AUTH
-export const RegisterAdmin = async (req: Request, res: Response): Promise<Response> => {
+export const registerAdmin = async (req: Request, res: Response): Promise<Response> => {
   try {
     return HttpSuccess(res, {}, 'User Registered Successfully');
   } catch (error: any) {

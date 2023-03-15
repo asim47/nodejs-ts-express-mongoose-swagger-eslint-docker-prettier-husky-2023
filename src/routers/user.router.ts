@@ -11,10 +11,10 @@ class User {
   }
 
   private UserRouter(): void {
-    // @Route POST /register
+    // @Route POST /user/register
     // @DESC Register a user
     // @ACCESS PUBLIC
-    this.router.post('/register/admin', UserController.RegisterAdmin);
+    this.router.post('/register', UserController.registerAdmin);
   }
 }
 

@@ -2,5 +2,4 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 npm run pre-commit
-npm run lintfix  
-npx lint-staged && git update-index --again
+npm run lintfix && git update-index --again

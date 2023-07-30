@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import * as JWT from 'jsonwebtoken';
-import { Jwt } from '../helpers/env';
+import { Jwt } from '../../helpers/env';
 
 //Checks for a login user
 export const jwtAuth = (req: Request, res: Response, next: NextFunction): void | Response => {
